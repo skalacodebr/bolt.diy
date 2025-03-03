@@ -35,17 +35,17 @@ const BASE_COLORS = {
     950: '#0A0A0A',
   },
   accent: {
-    50: '#F8F5FF',
-    100: '#F0EBFF',
-    200: '#E1D6FF',
-    300: '#CEBEFF',
-    400: '#B69EFF',
-    500: '#9C7DFF',
-    600: '#8A5FFF',
-    700: '#7645E8',
-    800: '#6234BB',
-    900: '#502D93',
-    950: '#2D1959',
+    50: '#E6F7FF',  // Azul claro
+    100: '#BAE7FF', // Azul claro
+    200: '#91D5FF', // Azul médio claro
+    300: '#69C0FF', // Azul médio
+    400: '#40A9FF', // Azul médio
+    500: '#1890FF', // Azul principal
+    600: '#0C8A45', // Verde médio
+    700: '#096534', // Verde escuro
+    800: '#074D27', // Verde escuro
+    900: '#063C1E', // Verde muito escuro
+    950: '#052E16', // Verde muito escuro
   },
   green: {
     50: '#F0FDF4',

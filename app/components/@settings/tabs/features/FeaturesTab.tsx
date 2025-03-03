@@ -1,4 +1,3 @@
-// Remove unused imports
 import React, { memo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Switch } from '~/components/ui/Switch';
@@ -6,6 +5,7 @@ import { useSettings } from '~/lib/hooks/useSettings';
 import { classNames } from '~/utils/classNames';
 import { toast } from 'react-toastify';
 import { PromptLibrary } from '~/lib/common/prompt-library';
+import { CustomPromptEditor } from './CustomPromptEditor';
 
 interface FeatureToggle {
   id: string;
@@ -264,7 +264,7 @@ export default function FeaturesTab() {
               Prompt Library
             </h4>
             <p className="text-xs text-bolt-elements-textSecondary mt-0.5">
-              Choose a prompt from the library to use as the system prompt
+              Choose from available prompt templates or customize your own
             </p>
           </div>
           <select
@@ -289,6 +289,9 @@ export default function FeaturesTab() {
             ))}
           </select>
         </div>
+
+        {/* Show the custom prompt editor when custom prompt is selected */}
+        {promptId === 'custom' && <CustomPromptEditor />}
       </motion.div>
     </div>
   );

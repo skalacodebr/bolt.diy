@@ -36,6 +36,8 @@ import ProgressCompilation from './ProgressCompilation';
 import type { ProgressAnnotation } from '~/types/context';
 import type { ActionRunner } from '~/lib/runtime/action-runner';
 import { LOCAL_PROVIDERS } from '~/lib/stores/settings';
+import { PromptLibrary } from '~/lib/common/prompt-library';
+import { useSettings } from '~/lib/hooks/useSettings';
 
 const TEXTAREA_MIN_HEIGHT = 76;
 
@@ -113,12 +115,14 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     const TEXTAREA_MAX_HEIGHT = chatStarted ? 400 : 200;
     const [apiKeys, setApiKeys] = useState<Record<string, string>>(getApiKeysFromCookies());
     const [modelList, setModelList] = useState<ModelInfo[]>([]);
-    const [isModelSettingsCollapsed, setIsModelSettingsCollapsed] = useState(false);
+    const [isModelSettingsCollapsed, setIsModelSettingsCollapsed] = useState(true);
     const [isListening, setIsListening] = useState(false);
     const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
     const [transcript, setTranscript] = useState('');
     const [isModelLoading, setIsModelLoading] = useState<string | undefined>('all');
     const [progressAnnotations, setProgressAnnotations] = useState<ProgressAnnotation[]>([]);
+    const { promptId, setPromptId } = useSettings();
+
     useEffect(() => {
       if (data) {
         const progressList = data.filter(
@@ -318,10 +322,10 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
             {!chatStarted && (
               <div id="intro" className="mt-[16vh] max-w-chat mx-auto text-center px-4 lg:px-0">
                 <h1 className="text-3xl lg:text-6xl font-bold text-bolt-elements-textPrimary mb-4 animate-fade-in">
-                  Where ideas begin
+                  Bem-Vindo to SkalaBot! 🚀
                 </h1>
                 <p className="text-md lg:text-xl mb-8 text-bolt-elements-textSecondary animate-fade-in animation-delay-200">
-                  Bring ideas to life in seconds or get help on existing projects.
+                 Aqui as ideias são criadas em segundos...
                 </p>
               </div>
             )}
@@ -516,7 +520,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                         minHeight: TEXTAREA_MIN_HEIGHT,
                         maxHeight: TEXTAREA_MAX_HEIGHT,
                       }}
-                      placeholder="How can Bolt help you today?"
+                      placeholder="Como eu posso te ajudar hoje?"
                       translate="no"
                     />
                     <ClientOnly>
@@ -543,6 +547,29 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                         <IconButton title="Upload file" className="transition-all" onClick={() => handleFileUpload()}>
                           <div className="i-ph:paperclip text-xl"></div>
                         </IconButton>
+                        
+                        {/* Add Prompt Selector */}
+                        <select
+                          value={promptId}
+                          onChange={(e) => {
+                            setPromptId(e.target.value);
+                            toast.success('Prompt template updated');
+                          }}
+                          className={classNames(
+                            'p-1 rounded-lg text-sm',
+                            'bg-bolt-elements-background-depth-3 border border-bolt-elements-borderColor',
+                            'text-bolt-elements-textPrimary',
+                            'focus:outline-none focus:ring-2 focus:ring-purple-500/30',
+                            'transition-all duration-200',
+                          )}
+                        >
+                          {PromptLibrary.getList().map((x) => (
+                            <option key={x.id} value={x.id}>
+                              {x.label}
+                            </option>
+                          ))}
+                        </select>
+
                         <IconButton
                           title="Enhance prompt"
                           disabled={input.length === 0 || enhancingPrompt}

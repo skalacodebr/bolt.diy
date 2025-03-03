@@ -26,6 +26,7 @@ const TAB_ICONS: Record<TabType, string> = {
   update: 'i-ph:arrow-clockwise-fill',
   'task-manager': 'i-ph:chart-line-fill',
   'tab-management': 'i-ph:squares-four-fill',
+  database: 'i-ph:database-fill',
 };
 
 // Define which tabs are default in user mode
@@ -37,6 +38,7 @@ const DEFAULT_USER_TABS: TabType[] = [
   'connection',
   'notifications',
   'event-logs',
+  'database', // Adding database tab
 ];
 
 // Define which tabs can be added to user mode
